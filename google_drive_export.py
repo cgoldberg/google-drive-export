@@ -161,10 +161,10 @@ def convert_size(size_bytes):
     return f"{s} {sizes[i]}"
 
 
-def run(base_dir):
-    working_dir = os.path.join(base_dir, "exported_files")
-    token_file = os.path.join(base_dir, "token.json")
-    creds_file = os.path.join(base_dir, "credentials.json")
+def run(working_dir):
+    cur_dir = os.getcwd()
+    token_file = os.path.join(".", "token.json")
+    creds_file = os.path.join(".", "credentials.json")
     if not os.path.exists(creds_file):
         sys.exit(f"Can't find required file: {creds_file}")
     if os.path.exists(working_dir):
@@ -186,10 +186,11 @@ def run(base_dir):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--dir", default=os.getcwd(), help="output directory")
+    parser.add_argument("--dir", default=".", help="output directory")
     args = parser.parse_args()
     try:
-        run(base_dir=args.dir)
+        working_dir = os.path.join(args.dir, "exported_files")
+        run(working_dir)
     except KeyboardInterrupt:
         sys.exit(1)
 
