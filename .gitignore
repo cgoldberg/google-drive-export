@@ -1,6 +1,6 @@
-# Secrets
 credentials.json
 token.json
+exported_files/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
