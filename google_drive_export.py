@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# Corey Goldberg, 2025
+# License: MIT
+
+"""Export your Google Drive data"""
+
 
 import argparse
 import io
@@ -68,7 +73,7 @@ class GDriveExport:
                 if done:
                     break
         except HttpError as e:
-            # Only files with binary content can be downloaded not native
+            # Only files with binary content can be downloaded, not native
             # Google App files (Docs/Sheets/Slides/Forms/etc)
             if (
                 e.status_code == 403
