@@ -43,8 +43,9 @@ class GDriveExport:
             "https://www.googleapis.com/auth/drive.metadata.readonly",
             "https://www.googleapis.com/auth/drive.readonly",
         ]
-        # The file token.json stores the user's access and refresh tokens, and is created
-        # automatically when the authorization flow completes for the first time
+        # The file token.json stores the user's access and refresh tokens,
+        # and is created automatically when the authorization flow completes
+        # for the first time
         if os.path.exists(self.token_file):
             creds = Credentials.from_authorized_user_file(self.token_file, scopes)
         else:
