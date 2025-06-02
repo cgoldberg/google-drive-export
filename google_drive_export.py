@@ -14,6 +14,7 @@ import sys
 
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
+from google.auth.exceptions import RefreshError
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
@@ -29,7 +30,13 @@ class GDriveExport:
 
         self.folder_cache = {}
 
-        self.creds = self._authenticate()
+        # If modifying these scopes, delete the `token.json` file
+        self.scopes = [
+            "https://www.googleapis.com/auth/drive.metadata.readonly",
+            "https://www.googleapis.com/auth/drive.readonly",
+        ]
+
+        self.creds = self._authenticate(self.scopes)
         self.service = build("drive", "v3", credentials=self.creds)
         self.files = self._get_files()
         self.files_map = self._map_files()
@@ -37,13 +44,8 @@ class GDriveExport:
         for file_path, file_id in self.files_map.items():
             self._download_file(file_id, file_path)
 
-    def _authenticate(self):
-        # If modifying these scopes, delete the `token.json` file
-        scopes = [
-            "https://www.googleapis.com/auth/drive.metadata.readonly",
-            "https://www.googleapis.com/auth/drive.readonly",
-        ]
-        # The file token.json stores the user's access and refresh tokens,
+    def _authenticate(self, scopes):
+        # The token.json file stores the user's access and refresh tokens,
         # and is created automatically when the authorization flow completes
         # for the first time
         if os.path.exists(self.token_file):
@@ -52,16 +54,22 @@ class GDriveExport:
             creds = None
         # If there are no (valid) credentials available, let the user log in
         if not creds or not creds.valid:
-            if creds and creds.expired and creds.refresh_token:
-                creds.refresh(Request())
+            if creds and creds.refresh_token:
+                try:
+                    creds.refresh(Request())
+                except RefreshError:
+                    # Token has probably expired or been revoked
+                    creds = self._login(self.creds_file, scopes)
             else:
-                flow = InstalledAppFlow.from_client_secrets_file(
-                    self.creds_file, scopes
-                )
-                creds = flow.run_local_server(port=0)
+                creds = self._login(self.creds_file, scopes)
             # Save the credentials for the next run
-            with open(self.token_file, "w") as token:
-                token.write(creds.to_json())
+            with open(self.token_file, "w") as f:
+                f.write(creds.to_json())
+        return creds
+
+    def _login(self, creds_file, scopes):
+        flow = InstalledAppFlow.from_client_secrets_file(creds_file, scopes)
+        creds = flow.run_local_server(port=0)
         return creds
 
     def _download_file(self, file_id, file_path):
