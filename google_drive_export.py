@@ -110,7 +110,7 @@ class GDriveExport:
             results = (
                 self.service.files()
                 .list(
-                    q=f"'{email}' in owners and mimeType!='application/vnd.google-apps.folder'",
+                    q=f"'{email}' in owners and trashed=false and mimeType!='application/vnd.google-apps.folder'",
                     spaces="drive",
                     fields="nextPageToken, files(id, name, parents)",
                     pageToken=page_token,
