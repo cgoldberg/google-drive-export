@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "google-drive-export"
-version = "0.1.2"
+version = "0.1.3dev0"
 description = "Export your Google Drive data"
 license = "MIT"
 license-files = ["LICENSE"]
