@@ -1,9 +1,7 @@
-#!/usr/bin/env python3
-# Corey Goldberg, 2025
+# Copyright (c) 2025 Corey Goldberg
 # License: MIT
 
-"""Export your Google Drive data"""
-
+"""Export your Google Drive data."""
 
 import argparse
 import io
@@ -12,9 +10,9 @@ import os
 import shutil
 import sys
 
+from google.auth.exceptions import RefreshError
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
-from google.auth.exceptions import RefreshError
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
@@ -22,7 +20,6 @@ from googleapiclient.http import MediaIoBaseDownload
 
 
 class GDriveExport:
-
     def __init__(self, working_dir, token_file, creds_file):
         self.working_dir = working_dir
         self.token_file = token_file
@@ -87,8 +84,7 @@ class GDriveExport:
             if (
                 e.status_code == 403
                 and e.error_details[0]["reason"] == "fileNotDownloadable"
-                and "only files with binary content can be downloaded"
-                in e.reason.lower()
+                and "only files with binary content can be downloaded" in e.reason.lower()
             ):
                 return None
             else:
@@ -132,11 +128,7 @@ class GDriveExport:
             if current_id in self.folder_cache:
                 folder_name, parent_id = self.folder_cache[current_id]
             else:
-                folder = (
-                    self.service.files()
-                    .get(fileId=current_id, fields="name, parents")
-                    .execute()
-                )
+                folder = self.service.files().get(fileId=current_id, fields="name, parents").execute()
                 folder_name = folder.get("name")
                 parent_id = folder.get("parents", [None])[0]
                 self.folder_cache[current_id] = (folder_name, parent_id)
@@ -169,22 +161,19 @@ def convert_size(size_bytes):
     if size_bytes == 0:
         return "0 B"
     sizes = ("B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
-    i = int(math.floor(math.log(size_bytes, 1024)))
+    i = math.floor(math.log(size_bytes, 1024))
     p = math.pow(1024, i)
     s = round(size_bytes / p, 2)
     return f"{s} {sizes[i]}"
 
 
 def run(working_dir):
-    cur_dir = os.getcwd()
     token_file = os.path.join(".", "token.json")
     creds_file = os.path.join(".", "credentials.json")
     if not os.path.exists(creds_file):
         sys.exit(f"Can't find required file: {creds_file}")
     if os.path.exists(working_dir):
-        overwrite = input(
-            f"The '{os.path.basename(working_dir)}' directory already exists. Overwrite? [y/N] "
-        ).lower()
+        overwrite = input(f"The '{os.path.basename(working_dir)}' directory already exists. Overwrite? [y/N] ").lower()
         if overwrite in ("y", "yes"):
             shutil.rmtree(working_dir)
         else:
@@ -207,7 +196,3 @@ def main():
         run(working_dir)
     except KeyboardInterrupt:
         sys.exit(1)
-
-
-if __name__ == "__main__":
-    main()
