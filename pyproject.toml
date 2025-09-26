@@ -24,7 +24,7 @@ classifiers = [
     "Programming Language :: Python :: 3.13",
 ]
 dependencies = [
-    "google-api-python-client==2.176.0",
+    "google-api-python-client==2.183.0",
     "google-auth-httplib2==0.2.0",
     "google-auth-oauthlib==1.2.2",
 ]
@@ -52,13 +52,13 @@ validate = [
 ]
 
 [tool.black]
-line-length = 88
+line-length = 120
 target-version = [
     "py39", "py310", "py311", "py312", "py313"
 ]
 
 [tool.ruff]
-line-length = 88
+line-length = 120
 respect-gitignore = true
 target-version = "py39"
 
@@ -74,7 +74,7 @@ fixable = ["ALL"]
 
 [tool.ruff.format]
 docstring-code-format = true
-docstring-code-line-length = 88
+docstring-code-line-length = 120
 
 [tool.refurb]
 python_version = "3.9"
