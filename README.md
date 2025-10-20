@@ -1,6 +1,10 @@
 # google-drive-export
 
-### Export your Google Drive data
+## Export your Google Drive data
+
+----
+
+[![Supported Python Versions](https://img.shields.io/pypi/pyversions/google-drive-export)](https://pypi.org/project/google-drive-export)
 
 - Copyright (c) 2025 [Corey Goldberg][github-home]
 - License: [MIT][mit-license]
