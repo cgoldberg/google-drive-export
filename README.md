@@ -1,6 +1,6 @@
 # google-drive-export
 
-## Export your Google Drive data
+### Export your Google Drive data
 
 ----
 
