@@ -35,7 +35,7 @@ For more information:
 
 ## Requirements:
 
-- Python 3.9+
+- Python 3.10+
 - Packages:
   - google-api-python-client
   - google-auth-httplib2
