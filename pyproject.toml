@@ -50,6 +50,7 @@ validate = [
 
 [tool.ruff]
 line-length = 120
+respect-gitignore = true
 target-version = "py310"
 
 [tool.ruff.lint]
