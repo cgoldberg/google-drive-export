@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "google-drive-export"
-version = "0.1.5"
+version = "0.1.6.dev0"
 description = "Export and archive Google Drive files"
 license = "MIT"
 license-files = ["LICENSE"]
@@ -53,14 +53,10 @@ target-version = "py310"
 [tool.ruff.lint]
 select = ["ALL"]
 ignore = [
-    "ANN", "COM812",
-    "D", "EM", "PLR2004", "PTH", "T201", "TRY"
+    "ANN", "COM812", "D",
+    "EM", "PLR2004", "PTH",
+    "T201", "TRY"
 ]
-#select = [
-#    "E", "F", "I", "FURB",
-#    "RUF", "TID", "W"
-#]
-#ignore = ["RUF012"]
 fixable = ["ALL"]
 
 [tool.ruff.format]
