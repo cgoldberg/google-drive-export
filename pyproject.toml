@@ -11,22 +11,22 @@ license-files = ["LICENSE"]
 authors = [{name = "Corey Goldberg"}]
 maintainers = [{name = "Corey Goldberg"}]
 readme = "README.md"
-requires-python = ">= 3.10"
+requires-python = ">= 3.11"
 keywords = ["google", "drive", "google-drive", "archive", "backup", "export", "takeout"]
 classifiers = [
     "Environment :: Console",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: 3.15",
 ]
 dependencies = [
-    "google-api-python-client==2.198.0",
-    "google-auth-httplib2==0.4.0",
-    "google-auth-oauthlib==1.4.0",
+    "google-api-python-client==2.201.0",
+    "google-auth-httplib2==0.4.4",
+    "google-auth-oauthlib==1.5.0",
 ]
 
 [project.scripts]
@@ -38,14 +38,11 @@ source = "https://github.com/cgoldberg/google-drive-export"
 download = "https://pypi.org/project/google-drive-export"
 
 [dependency-groups]
-dev = [
-    "tox",
-]
 lint = [
-    "ruff",
+    "ruff==0.17.4",
 ]
 validate = [
-    "validate-pyproject[all]",
+    "validate-pyproject[all]==0.27",
 ]
 
 [tool.ruff]
@@ -54,12 +51,16 @@ respect-gitignore = true
 target-version = "py310"
 
 [tool.ruff.lint]
-select = [
-    "E", "F", "I", "FURB", "RUF", "TID", "W"
-]
+select = ["ALL"]
 ignore = [
-    "RUF012",
+    "ANN", "COM812",
+    "D", "EM", "PLR2004", "PTH", "T201", "TRY"
 ]
+#select = [
+#    "E", "F", "I", "FURB",
+#    "RUF", "TID", "W"
+#]
+#ignore = ["RUF012"]
 fixable = ["ALL"]
 
 [tool.ruff.format]

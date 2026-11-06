@@ -1,7 +1,7 @@
-# Copyright (c) 2025 Corey Goldberg
-# License: MIT
+# Copyright (c) 2025-2026 Corey Goldberg
+# SPDX-License-Identifier: MIT
 
-"""Export your Google Drive data."""
+"""Export and archive Google Drive files."""
 
 import argparse
 import io
@@ -66,14 +66,13 @@ class GDriveExport:
 
     def _login(self, creds_file, scopes):
         flow = InstalledAppFlow.from_client_secrets_file(creds_file, scopes)
-        creds = flow.run_local_server(port=0)
-        return creds
+        return flow.run_local_server(port=0)
 
     def _download_file(self, file_id, file_path):
         request = self.service.files().get_media(fileId=file_id)
-        bytes = io.BytesIO()
+        bytes_ = io.BytesIO()
         try:
-            downloader = MediaIoBaseDownload(bytes, request)
+            downloader = MediaIoBaseDownload(bytes_, request)
             while True:
                 _, done = downloader.next_chunk()
                 if done:
@@ -87,13 +86,12 @@ class GDriveExport:
                 and "only files with binary content can be downloaded" in e.reason.lower()
             ):
                 return None
-            else:
-                raise
+            raise
         dir_name = os.path.dirname(file_path)
         if not os.path.exists(dir_name):
             os.makedirs(dir_name)
         with open(file_path, "wb") as f:
-            f.write(bytes.getvalue())
+            f.write(bytes_.getvalue())
         print(f"Downloaded: {file_path}")
         return file_path
 
@@ -142,8 +140,7 @@ class GDriveExport:
             folder_path = self._get_folder_path(f["parents"][0])
             file_path = os.path.join(self.working_dir, folder_path, f["name"])
             files_map[file_path] = f["id"]
-        sorted_files_map = {key: files_map[key] for key in sorted(files_map)}
-        return sorted_files_map
+        return {key: files_map[key] for key in sorted(files_map)}
 
 
 def dir_size(working_dir):

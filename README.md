@@ -6,15 +6,10 @@
 
 [![Supported Python Versions](https://img.shields.io/pypi/pyversions/google-drive-export)](https://pypi.org/project/google-drive-export)
 
-- Copyright (c) 2025 [Corey Goldberg][github-home]
+- Copyright (c) 2025-2026 [Corey Goldberg][github-home]
 - License: [MIT][mit-license]
 - Development: [GitHub][github-repo]
-- Download/Install: [PyPI][pypi]
-
-[github-home]: https://github.com/cgoldberg
-[mit-license]: https://raw.githubusercontent.com/cgoldberg/google-drive-export/refs/heads/master/LICENSE
-[github-repo]: https://github.com/cgoldberg/google-drive-export
-[pypi]: https://pypi.org/project/google-drive-export
+- Download/Install: [PyPI][pypi-home]
 
 ----
 
@@ -31,19 +26,11 @@ For more information:
 - [REST API Reference][api-reference]
 - [API Guides][api-guides]
 
-[api-overview]: https://developers.google.com/workspace/drive/api
-[api-reference]: https://developers.google.com/workspace/drive/api/reference/rest/v3
-[api-guides]: https://developers.google.com/workspace/drive/api/guides/about-files
-
 ----
 
 ## Requirements:
 
-- Python 3.10+
-- Packages:
-  - google-api-python-client
-  - google-auth-httplib2
-  - google-auth-oauthlib
+- Python 3.11+
 
 ----
 
@@ -59,37 +46,16 @@ options:
 
 ----
 
-## Installation:
+## Installation
 
-### Create a virtual environment and install with pip
+Install from [PyPI][pypi-home] using your preferred Python package
+manager:
 
-- On Linux/Mac:
+- **[pip][pypa-pip]:** `pip install google-drive-export`
+- **[pipx][pypa-pipx]:** `pipx install google-drive-export`
+- **[uv][uv-home]:** `uv tool install google-drive-export`
 
-```
-python3 -m venv venv
-source venv/bin/activate
-pip install google-drive-export
-```
-
-- On Windows:
-
-```
-py -m venv venv
-venv\Scripts\activate
-pip install google-drive-export
-```
-
-For more information on virtual env and pip, see:
-- https://packaging.python.org/en/latest/tutorials/installing-packages
-
-### Install globally with pipx
-
-```
-pipx install google-drive-export
-```
-
-For more information on pipx, see:
-- https://github.com/pypa/pipx
+After installation, the `google_drive_export` command is available on your `PATH`.
 
 ----
 
@@ -131,3 +97,14 @@ google_drive_export
   - If you are signed in to multiple accounts, select the account to use for authorization
   - Click Accept
 - Authorization information is stored in the file system (`token.json`), so the next time you run it, you aren't prompted for authorization
+
+[github-home]: https://github.com/cgoldberg
+[github-repo]: https://github.com/cgoldberg/google-drive-export
+[mit-license]: https://raw.githubusercontent.com/cgoldberg/google-drive-export/refs/heads/master/LICENSE
+[api-overview]: https://developers.google.com/workspace/drive/api
+[api-reference]: https://developers.google.com/workspace/drive/api/reference/rest/v3
+[api-guides]: https://developers.google.com/workspace/drive/api/guides/about-files
+[pypi-home]: https://pypi.org/project/google-drive-export
+[pypa-pip]: https://pip.pypa.io
+[pypa-pipx]: https://pipx.pypa.io
+[uv-home]: https://docs.astral.sh/uv
